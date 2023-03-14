@@ -30,8 +30,6 @@ const RegisterModal = () => {
         username,
       });
 
-      setIsLoading(false);
-
       toast.success("Account created.");
 
       signIn("credentials", {
@@ -46,7 +44,7 @@ const RegisterModal = () => {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [email, name, password, username, registerModal]);
 
   const onToggle = useCallback(() => {
     if (isLoading) {
@@ -80,6 +78,7 @@ const RegisterModal = () => {
       <Input
         placeholder="password"
         onChange={(e) => setPassword(e.target.value)}
+        type="password"
         value={password}
         disabled={isLoading}
       />
