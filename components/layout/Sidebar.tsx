@@ -2,6 +2,7 @@ import { BsBellFill, BsHouseFill } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { signOut } from "next-auth/react";
+import { v4 as uuidv4 } from "uuid";
 
 import SidebarItem from "./SidebarItem";
 import SidebarLogo from "./SidebarLogo";
@@ -24,7 +25,7 @@ const Sidebar = () => {
     },
     {
       label: "Profile",
-      href: "/users/123",
+      href: `/users/${currentUser?.id}`,
       icon: FaUser,
       auth: true,
     },
@@ -37,7 +38,8 @@ const Sidebar = () => {
           <SidebarLogo />
           {items.map((item) => (
             <SidebarItem
-              key={item.href}
+              key={uuidv4()}
+              href={item.href}
               label={item.label}
               icon={item.icon}
               auth={item.auth}
