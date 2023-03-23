@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
+
 import serverAuth from "../../../libs/serverAuth";
+import prisma from "../../../libs/prismadb";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,7 +14,7 @@ export default async function handler(
     if (req.method === "POST") {
       const { currentUser } = await serverAuth(req);
       const { body } = req.body;
-      const post = await prisma?.post.create({
+      const post = await prisma.post.create({
         data: {
           body,
           userId: currentUser.id,
@@ -24,7 +26,7 @@ export default async function handler(
       const { userId } = req.query;
       let posts;
       if (userId && typeof userId === "string") {
-        posts = await prisma?.post.findMany({
+        posts = await prisma.post.findMany({
           where: {
             userId: userId,
           },
@@ -37,7 +39,7 @@ export default async function handler(
           },
         });
       } else {
-        posts = await prisma?.post.findMany({
+        posts = await prisma.post.findMany({
           include: {
             user: true,
             comments: true,
